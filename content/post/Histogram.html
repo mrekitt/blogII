@@ -1,0 +1,46 @@
+---
+title: "Histogram"
+author: "Micheal Rekitt"
+date: 2017-10-18
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+
+
+<div id="quick-tutorial-on-histograms" class="section level1">
+<h1>Quick tutorial on Histograms</h1>
+<p>First we need to make sure we have three packages installed for this example: Lahman, sqldf, and ggplot2</p>
+<pre class="r"><code>library(Lahman)</code></pre>
+<pre><code>## Warning: package &#39;Lahman&#39; was built under R version 3.4.2</code></pre>
+<pre class="r"><code>library(sqldf)</code></pre>
+<pre><code>## Warning: package &#39;sqldf&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Loading required package: gsubfn</code></pre>
+<pre><code>## Warning: package &#39;gsubfn&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Loading required package: proto</code></pre>
+<pre><code>## Warning: package &#39;proto&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Loading required package: RSQLite</code></pre>
+<pre class="r"><code>library(ggplot2)</code></pre>
+</div>
+<div id="step-one" class="section level1">
+<h1>Step One</h1>
+<div id="gather-data" class="section level2">
+<h2>Gather Data</h2>
+<p>Any variable can be looked at. Let’s check out weight.</p>
+<pre class="r"><code>query&lt;-&quot;SELECT weight FROM Master&quot;
+result&lt;-sqldf(query)</code></pre>
+</div>
+</div>
+<div id="step-two" class="section level1">
+<h1>Step Two</h1>
+<div id="write-the-plot" class="section level2">
+<h2>Write The Plot</h2>
+<pre class="r"><code>ggplot()+
+  geom_histogram(data=result,aes(x=weight),color=&quot;blue&quot;,fill=&quot;pink&quot;,bins=60)+
+  ggtitle(&quot;Player Weight&quot;)+
+  xlab(&quot; Weight of Player&quot;)+
+  ylab(&quot;Number of Players&quot;)</code></pre>
+<pre><code>## Warning: Removed 854 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="/post/Histogram_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+</div>

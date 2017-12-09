@@ -1,0 +1,44 @@
+---
+title: "Histogram"
+author: "Micheal Rekitt"
+date: 2017-10-18
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Quick tutorial on Histograms
+
+First we need to make sure we have three packages installed for this example: Lahman, sqldf, and ggplot2
+
+```{r}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+
+# Step One
+
+## Gather Data
+
+Any variable can be looked at. Let's check out weight.
+
+```{r}
+query<-"SELECT weight FROM Master"
+result<-sqldf(query)
+
+```
+# Step Two
+
+## Write The Plot
+
+```{r}
+ggplot()+
+  geom_histogram(data=result,aes(x=weight),color="blue",fill="pink",bins=60)+
+  ggtitle("Player Weight")+
+  xlab(" Weight of Player")+
+  ylab("Number of Players")
+```
+

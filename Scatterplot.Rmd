@@ -1,0 +1,59 @@
+---
+title: "Scatterplots"
+author: "Micheal Rekitt"
+date: 2017-10-18
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Quick Tutorial on Scatterplots
+
+First we need our three packages for the example data: Lahman, sqldf, and ggplot2
+```{r}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+# Step One
+
+## Gathering Data
+
+```{r}
+query<-"SELECT playerID, sum(HR), sum(SO)
+FROM Batting
+GROUP BY playerID
+HAVING sum(HR)>400"
+
+sqldf(query)
+```
+# Step Two
+
+## Renaming sum(HR) and sum(SO)
+
+ggplot2 is unable to process "sum", so we must rename sum(HR) and sum(SO)
+
+```{r}
+query<-"SELECT playerID, sum(HR) AS HR, sum(SO) AS SO
+FROM Batting
+GROUP BY playerID
+HAVING sum(HR)>400"
+
+results<-sqldf(query)
+```
+# Step Three
+
+## Creating the Scatterplot
+
+
+```{r}
+ggplot()+
+  geom_point(data=results,aes(x=SO,y=HR),size=3)+
+  ggtitle("Career Stikeouts and Homeruns")+
+  xlab("Career Strikeouts")+
+  ylab("Career Homeruns")
+
+```
+

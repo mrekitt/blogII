@@ -1,0 +1,48 @@
+---
+title: "Time Series"
+author: "Micheal Rekitt"
+date: 2017-11-08
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+
+
+<div id="quick-tutorial-on-time-series" class="section level1">
+<h1>Quick Tutorial on Time Series</h1>
+<p>First we need our three packages for the example data: Lahman, sqldf, and ggplot2</p>
+<pre class="r"><code>library(Lahman)</code></pre>
+<pre><code>## Warning: package &#39;Lahman&#39; was built under R version 3.4.2</code></pre>
+<pre class="r"><code>library(sqldf)</code></pre>
+<pre><code>## Warning: package &#39;sqldf&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Loading required package: gsubfn</code></pre>
+<pre><code>## Warning: package &#39;gsubfn&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Loading required package: proto</code></pre>
+<pre><code>## Warning: package &#39;proto&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Loading required package: RSQLite</code></pre>
+<pre class="r"><code>library(ggplot2)</code></pre>
+</div>
+<div id="step-one" class="section level1">
+<h1>Step One</h1>
+<div id="gathering-data" class="section level2">
+<h2>Gathering Data</h2>
+<p>For this example let’s take Babe Ruth’s homeruns over the years</p>
+<pre class="r"><code>query&lt;-&quot;SELECT yearID, HR FROM Batting
+WHERE playerID=&#39;ruthba01&#39;&quot;
+
+results&lt;-sqldf(query)</code></pre>
+</div>
+</div>
+<div id="step-two" class="section level1">
+<h1>Step Two</h1>
+<div id="create-the-time-series" class="section level2">
+<h2>Create the Time Series</h2>
+<pre class="r"><code>ggplot()+
+  geom_point(data=results,aes(x=yearID,y=HR),size=1)+
+  geom_line(data=results,aes(x=yearID,y=HR))+
+  ggtitle(&quot;Babe Ruth&#39;s Homeruns by Year&quot;)+
+  xlab(&quot;Year&quot;)+
+  ylab(&quot;Number of Homeruns&quot;)</code></pre>
+<p><img src="/post/TimeSeries_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+</div>

@@ -1,0 +1,55 @@
+---
+title: "Barplots"
+author: "Micheal Rekitt"
+date: 2017-12-08
+categories: ["R"]
+tags: ["R Markdown", "plot"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+# Quick tutorial on how to make barplots via Rstudio.
+
+## Step One 
+### Activate three packages: Lahman, sqldf, and ggplot2.
+
+```{r}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+## Step Two
+### Determine data
+
+Let's look at team homeruns totals from 1990
+```{r}
+query<-"SELECT name,HR
+FROM Teams
+WHERE yearID=1990
+ORDER BY HR"
+
+result<-sqldf(query)
+result$name<-factor(result$name,levels=result$name)
+```
+## Step Three
+### Creating the barplot
+```{r}
+ggplot()+
+  geom_bar(data=result,aes(x=name,y=HR),stat='identity')+
+  coord_flip()+
+  ggtitle("1990 Team Homerun Totals")+
+  xlab("Team Name")+
+  ylab("homeruns")
+```
+
+
+## Notes
+
+If you want to switch the x and y axis remove "coord_flip()+"
+
+"geom_bar" identifies for the visualization to be a barplot
+
+
+

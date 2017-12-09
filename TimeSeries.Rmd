@@ -1,0 +1,46 @@
+---
+title: "Time Series"
+author: "Micheal Rekitt"
+date: 2017-11-08
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Quick Tutorial on Time Series
+
+First we need our three packages for the example data: Lahman, sqldf, and ggplot2
+```{r}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+# Step One
+
+## Gathering Data
+
+For this example let's take Babe Ruth's homeruns over the years
+
+```{r}
+query<-"SELECT yearID, HR FROM Batting
+WHERE playerID='ruthba01'"
+
+results<-sqldf(query)
+```
+
+# Step Two
+
+## Create the Time Series
+
+```{r}
+ggplot()+
+  geom_point(data=results,aes(x=yearID,y=HR),size=1)+
+  geom_line(data=results,aes(x=yearID,y=HR))+
+  ggtitle("Babe Ruth's Homeruns by Year")+
+  xlab("Year")+
+  ylab("Number of Homeruns")
+```
+
